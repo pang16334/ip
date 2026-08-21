@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -15,8 +16,7 @@ public class Trackie {
         System.out.println("Hello! I'm Trackie.");
         System.out.println("What can I do for you today?");
 
-        Task[] tasks = new Task[100];
-        int taskCount = 0;
+        ArrayList<Task> tasks = new ArrayList<>();
 
         try (Scanner scanner = new Scanner(System.in)) {
             while (scanner.hasNextLine()) {
@@ -28,32 +28,39 @@ public class Trackie {
                         break;
                     } else if (command.equals("list")) {
                         System.out.println("Here are the tasks in your list:");
-                        for (int i = 0; i < taskCount; i++) {
-                            System.out.println((i + 1) + "." + tasks[i]);
+                        for (int i = 0; i < tasks.size(); i++) {
+                            System.out.println((i + 1) + "." + tasks.get(i));
                         }
                     } else if (command.equals("mark") || command.startsWith("mark ")) {
-                        int taskIndex = parseTaskIndex(command, "mark", taskCount);
-                        tasks[taskIndex].markAsDone();
+                        int taskIndex = parseTaskIndex(command, "mark", tasks.size());
+                        tasks.get(taskIndex).markAsDone();
                         System.out.println("Nice! I've marked this task as done:");
-                        System.out.println("  " + tasks[taskIndex]);
+                        System.out.println("  " + tasks.get(taskIndex));
                     } else if (command.equals("unmark") || command.startsWith("unmark ")) {
-                        int taskIndex = parseTaskIndex(command, "unmark", taskCount);
-                        tasks[taskIndex].markAsNotDone();
+                        int taskIndex = parseTaskIndex(command, "unmark", tasks.size());
+                        tasks.get(taskIndex).markAsNotDone();
                         System.out.println("OK, I've marked this task as not done yet:");
-                        System.out.println("  " + tasks[taskIndex]);
+                        System.out.println("  " + tasks.get(taskIndex));
+                    } else if (command.equals("delete") || command.startsWith("delete ")) {
+                        int taskIndex = parseTaskIndex(command, "delete", tasks.size());
+                        Task removedTask = tasks.remove(taskIndex);
+                        String taskWord = tasks.size() == 1 ? "task" : "tasks";
+                        System.out.println("Noted. I've removed this task:");
+                        System.out.println("  " + removedTask);
+                        System.out.println("Now you have " + tasks.size() + " " + taskWord + " in the list.");
                     } else if (command.equals("todo") || command.startsWith("todo ")) {
                         String description = command.substring(4).trim();
                         if (description.isEmpty()) {
                             throw new TrackieException("Oops! A todo needs a description.");
                         }
                         Task task = new Todo(description);
-                        taskCount = addTask(tasks, taskCount, task);
+                        addTask(tasks, task);
                     } else if (command.equals("deadline") || command.startsWith("deadline ")) {
                         Task task = parseDeadline(command);
-                        taskCount = addTask(tasks, taskCount, task);
+                        addTask(tasks, task);
                     } else if (command.equals("event") || command.startsWith("event ")) {
                         Task task = parseEvent(command);
-                        taskCount = addTask(tasks, taskCount, task);
+                        addTask(tasks, task);
                     } else {
                         throw new TrackieException("Oops! I don't recognize that command.");
                     }
@@ -65,31 +72,22 @@ public class Trackie {
     }
 
     /**
-     * Stores a task, displays confirmation, and returns the updated task count.
+     * Stores a task and displays confirmation.
      *
-     * @param tasks array in which tasks are stored
-     * @param taskCount number of tasks before the addition
+     * @param tasks list in which tasks are stored
      * @param task task to add
-     * @return number of tasks after the addition
-     * @throws TrackieException if the task list is full
      */
-    private static int addTask(Task[] tasks, int taskCount, Task task) throws TrackieException {
-        if (taskCount >= tasks.length) {
-            throw new TrackieException("Oops! Your task list is full.");
-        }
-
-        tasks[taskCount] = task;
-        int updatedTaskCount = taskCount + 1;
-        String taskWord = updatedTaskCount == 1 ? "task" : "tasks";
+    private static void addTask(ArrayList<Task> tasks, Task task) {
+        tasks.add(task);
+        String taskWord = tasks.size() == 1 ? "task" : "tasks";
 
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + task);
-        System.out.println("Now you have " + updatedTaskCount + " " + taskWord + " in the list.");
-        return updatedTaskCount;
+        System.out.println("Now you have " + tasks.size() + " " + taskWord + " in the list.");
     }
 
     /**
-     * Parses and validates the task number in a mark or unmark command.
+     * Parses and validates the task number in a mark, unmark, or delete command.
      *
      * @param command full command entered by the user
      * @param commandName name of the command being parsed
