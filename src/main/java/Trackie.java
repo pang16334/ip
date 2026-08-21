@@ -15,6 +15,9 @@ public class Trackie {
         System.out.println("Hello! I'm Trackie.");
         System.out.println("What can I do for you today?");
 
+        String[] tasks = new String[100];
+        int taskCount = 0;
+
         try (Scanner scanner = new Scanner(System.in)) {
             while (scanner.hasNextLine()) {
                 String command = scanner.nextLine();
@@ -22,9 +25,16 @@ public class Trackie {
                 if (command.equals("bye")) {
                     System.out.println("Bye! Consistency is the key. Hope to see you again soon!");
                     break;
+                } else if (command.equals("list")) {
+                    System.out.println("Here are the tasks in your list:");
+                    for (int i = 0; i < taskCount; i++) {
+                        System.out.println((i + 1) + ". " + tasks[i]);
+                    }
+                } else {
+                    tasks[taskCount] = command;
+                    taskCount++;
+                    System.out.println("Added: " + command);
                 }
-
-                System.out.println(command);
             }
         }
     }
