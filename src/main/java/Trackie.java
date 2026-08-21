@@ -57,6 +57,18 @@ public class Trackie {
                     System.out.println("Got it. I've added this task:");
                     System.out.println("  " + task);
                     System.out.println("Now you have " + taskCount + " tasks in the list.");
+                } else if (command.startsWith("event ")) {
+                    int fromIndex = command.indexOf(" /from ");
+                    int toIndex = command.indexOf(" /to ");
+                    String description = command.substring(6, fromIndex);
+                    String from = command.substring(fromIndex + 7, toIndex);
+                    String to = command.substring(toIndex + 5);
+                    Task task = new Event(description, from, to);
+                    tasks[taskCount] = task;
+                    taskCount++;
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("  " + task);
+                    System.out.println("Now you have " + taskCount + " tasks in the list.");
                 } else {
                     tasks[taskCount] = new Task(command);
                     taskCount++;
