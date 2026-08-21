@@ -40,6 +40,13 @@ public class Trackie {
                     tasks[taskIndex].markAsNotDone();
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println("  " + tasks[taskIndex]);
+                } else if (command.startsWith("todo ")) {
+                    Task task = new Todo(command.substring(5));
+                    tasks[taskCount] = task;
+                    taskCount++;
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("  " + task);
+                    System.out.println("Now you have " + taskCount + " tasks in the list.");
                 } else {
                     tasks[taskCount] = new Task(command);
                     taskCount++;
