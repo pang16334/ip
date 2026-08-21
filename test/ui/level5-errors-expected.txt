@@ -1,0 +1,32 @@
+ _______             _    _
+|__   __|           | |  (_)
+   | |_ __ __ _  ___| | ___  ___
+   | | '__/ _` |/ __| |/ / |/ _ \
+   | | | | (_| | (__|   <| |  __/
+   |_|_|  \__,_|\___|_|\_\_|\___|
+
+Hello! I'm Trackie.
+What can I do for you today?
+Oops! There are no tasks to mark.
+Oops! Use: deadline DESCRIPTION /by TIME
+Oops! Use: deadline DESCRIPTION /by TIME
+Oops! A deadline needs a description.
+Oops! A deadline needs a due date or time after /by.
+Oops! Use: event DESCRIPTION /from START /to END
+Oops! Use: event DESCRIPTION /from START /to END
+Oops! An event needs a start after /from.
+Oops! An event needs an end after /to.
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 task in the list.
+Oops! The task number must be a whole number.
+Oops! Choose a task number between 1 and 1.
+Oops! Choose a task number between 1 and 1.
+Nice! I've marked this task as done:
+  [T][X] read book
+Oops! The task number must be a whole number.
+OK, I've marked this task as not done yet:
+  [T][ ] read book
+Here are the tasks in your list:
+1.[T][ ] read book
+Bye! Consistency is the key. Hope to see you again soon!

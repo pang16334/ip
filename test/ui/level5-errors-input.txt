@@ -1,0 +1,18 @@
+mark
+deadline
+deadline return book
+deadline /by Sunday
+deadline return book /by
+event
+event meeting /from Mon
+event meeting /from /to 4pm
+event meeting /from Mon /to
+todo read book
+mark abc
+mark 0
+mark 2
+mark 1
+unmark xyz
+unmark 1
+list
+bye
