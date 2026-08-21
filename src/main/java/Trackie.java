@@ -22,45 +22,51 @@ public class Trackie {
             while (scanner.hasNextLine()) {
                 String command = scanner.nextLine();
 
-                if (command.equals("bye")) {
-                    System.out.println("Bye! Consistency is the key. Hope to see you again soon!");
-                    break;
-                } else if (command.equals("list")) {
-                    System.out.println("Here are the tasks in your list:");
-                    for (int i = 0; i < taskCount; i++) {
-                        System.out.println((i + 1) + "." + tasks[i]);
+                try {
+                    if (command.equals("bye")) {
+                        System.out.println("Bye! Consistency is the key. Hope to see you again soon!");
+                        break;
+                    } else if (command.equals("list")) {
+                        System.out.println("Here are the tasks in your list:");
+                        for (int i = 0; i < taskCount; i++) {
+                            System.out.println((i + 1) + "." + tasks[i]);
+                        }
+                    } else if (command.startsWith("mark ")) {
+                        int taskIndex = Integer.parseInt(command.substring(5)) - 1;
+                        tasks[taskIndex].markAsDone();
+                        System.out.println("Nice! I've marked this task as done:");
+                        System.out.println("  " + tasks[taskIndex]);
+                    } else if (command.startsWith("unmark ")) {
+                        int taskIndex = Integer.parseInt(command.substring(7)) - 1;
+                        tasks[taskIndex].markAsNotDone();
+                        System.out.println("OK, I've marked this task as not done yet:");
+                        System.out.println("  " + tasks[taskIndex]);
+                    } else if (command.equals("todo") || command.startsWith("todo ")) {
+                        String description = command.substring(4).trim();
+                        if (description.isEmpty()) {
+                            throw new TrackieException("Oops! A todo needs a description.");
+                        }
+                        Task task = new Todo(description);
+                        taskCount = addTask(tasks, taskCount, task);
+                    } else if (command.startsWith("deadline ")) {
+                        int byIndex = command.indexOf(" /by ");
+                        String description = command.substring(9, byIndex);
+                        String by = command.substring(byIndex + 5);
+                        Task task = new Deadline(description, by);
+                        taskCount = addTask(tasks, taskCount, task);
+                    } else if (command.startsWith("event ")) {
+                        int fromIndex = command.indexOf(" /from ");
+                        int toIndex = command.indexOf(" /to ");
+                        String description = command.substring(6, fromIndex);
+                        String from = command.substring(fromIndex + 7, toIndex);
+                        String to = command.substring(toIndex + 5);
+                        Task task = new Event(description, from, to);
+                        taskCount = addTask(tasks, taskCount, task);
+                    } else {
+                        throw new TrackieException("Oops! I don't recognize that command.");
                     }
-                } else if (command.startsWith("mark ")) {
-                    int taskIndex = Integer.parseInt(command.substring(5)) - 1;
-                    tasks[taskIndex].markAsDone();
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.println("  " + tasks[taskIndex]);
-                } else if (command.startsWith("unmark ")) {
-                    int taskIndex = Integer.parseInt(command.substring(7)) - 1;
-                    tasks[taskIndex].markAsNotDone();
-                    System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println("  " + tasks[taskIndex]);
-                } else if (command.startsWith("todo ")) {
-                    Task task = new Todo(command.substring(5));
-                    taskCount = addTask(tasks, taskCount, task);
-                } else if (command.startsWith("deadline ")) {
-                    int byIndex = command.indexOf(" /by ");
-                    String description = command.substring(9, byIndex);
-                    String by = command.substring(byIndex + 5);
-                    Task task = new Deadline(description, by);
-                    taskCount = addTask(tasks, taskCount, task);
-                } else if (command.startsWith("event ")) {
-                    int fromIndex = command.indexOf(" /from ");
-                    int toIndex = command.indexOf(" /to ");
-                    String description = command.substring(6, fromIndex);
-                    String from = command.substring(fromIndex + 7, toIndex);
-                    String to = command.substring(toIndex + 5);
-                    Task task = new Event(description, from, to);
-                    taskCount = addTask(tasks, taskCount, task);
-                } else {
-                    tasks[taskCount] = new Task(command);
-                    taskCount++;
-                    System.out.println("Added: " + command);
+                } catch (TrackieException exception) {
+                    System.out.println(exception.getMessage());
                 }
             }
         }
