@@ -16,6 +16,7 @@ public class Trackie {
         System.out.println("What can I do for you today?");
 
         String[] tasks = new String[100];
+        boolean[] isDone = new boolean[100];
         int taskCount = 0;
 
         try (Scanner scanner = new Scanner(System.in)) {
@@ -28,8 +29,14 @@ public class Trackie {
                 } else if (command.equals("list")) {
                     System.out.println("Here are the tasks in your list:");
                     for (int i = 0; i < taskCount; i++) {
-                        System.out.println((i + 1) + ". " + tasks[i]);
+                        String statusIcon = isDone[i] ? "X" : " ";
+                        System.out.println((i + 1) + ".[" + statusIcon + "] " + tasks[i]);
                     }
+                } else if (command.startsWith("mark ")) {
+                    int taskIndex = Integer.parseInt(command.substring(5)) - 1;
+                    isDone[taskIndex] = true;
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println("  [X] " + tasks[taskIndex]);
                 } else {
                     tasks[taskCount] = command;
                     taskCount++;
