@@ -42,21 +42,13 @@ public class Trackie {
                     System.out.println("  " + tasks[taskIndex]);
                 } else if (command.startsWith("todo ")) {
                     Task task = new Todo(command.substring(5));
-                    tasks[taskCount] = task;
-                    taskCount++;
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println("  " + task);
-                    System.out.println("Now you have " + taskCount + " tasks in the list.");
+                    taskCount = addTask(tasks, taskCount, task);
                 } else if (command.startsWith("deadline ")) {
                     int byIndex = command.indexOf(" /by ");
                     String description = command.substring(9, byIndex);
                     String by = command.substring(byIndex + 5);
                     Task task = new Deadline(description, by);
-                    tasks[taskCount] = task;
-                    taskCount++;
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println("  " + task);
-                    System.out.println("Now you have " + taskCount + " tasks in the list.");
+                    taskCount = addTask(tasks, taskCount, task);
                 } else if (command.startsWith("event ")) {
                     int fromIndex = command.indexOf(" /from ");
                     int toIndex = command.indexOf(" /to ");
@@ -64,11 +56,7 @@ public class Trackie {
                     String from = command.substring(fromIndex + 7, toIndex);
                     String to = command.substring(toIndex + 5);
                     Task task = new Event(description, from, to);
-                    tasks[taskCount] = task;
-                    taskCount++;
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println("  " + task);
-                    System.out.println("Now you have " + taskCount + " tasks in the list.");
+                    taskCount = addTask(tasks, taskCount, task);
                 } else {
                     tasks[taskCount] = new Task(command);
                     taskCount++;
@@ -76,5 +64,24 @@ public class Trackie {
                 }
             }
         }
+    }
+
+    /**
+     * Stores a task, displays confirmation, and returns the updated task count.
+     *
+     * @param tasks array in which tasks are stored
+     * @param taskCount number of tasks before the addition
+     * @param task task to add
+     * @return number of tasks after the addition
+     */
+    private static int addTask(Task[] tasks, int taskCount, Task task) {
+        tasks[taskCount] = task;
+        int updatedTaskCount = taskCount + 1;
+        String taskWord = updatedTaskCount == 1 ? "task" : "tasks";
+
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + task);
+        System.out.println("Now you have " + updatedTaskCount + " " + taskWord + " in the list.");
+        return updatedTaskCount;
     }
 }
