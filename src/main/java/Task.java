@@ -1,17 +1,20 @@
 /**
  * Represents a task with a description and completion status.
  */
-public class Task {
+public abstract class Task {
     private final String description;
+    private final TaskType type;
     private boolean isDone;
 
     /**
      * Creates an incomplete task with the given description.
      *
      * @param description description of the task
+     * @param type type of the task
      */
-    public Task(String description) {
+    protected Task(String description, TaskType type) {
         this.description = description;
+        this.type = type;
         this.isDone = false;
     }
 
@@ -45,6 +48,6 @@ public class Task {
      */
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + this.description;
+        return "[" + this.type.getIcon() + "][" + getStatusIcon() + "] " + this.description;
     }
 }

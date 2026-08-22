@@ -8,10 +8,10 @@ public class Deadline extends Task {
      * Creates an incomplete deadline with the given description and due time.
      *
      * @param description description of the deadline
-     * @param by date or time by which the task should be completed
+    * @param by date or time by which the task should be completed
      */
     public Deadline(String description, String by) {
-        super(description);
+        super(description, TaskType.DEADLINE);
         this.by = by;
     }
 
@@ -22,6 +22,6 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + this.by + ")";
+        return super.toString() + " (by: " + this.by + ")";
     }
 }
