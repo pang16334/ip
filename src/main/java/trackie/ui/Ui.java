@@ -1,4 +1,9 @@
+package trackie.ui;
+
 import java.util.Scanner;
+
+import trackie.task.Task;
+import trackie.task.TaskList;
 
 /** Reads user commands and displays Trackie's responses. */
 public class Ui implements AutoCloseable {

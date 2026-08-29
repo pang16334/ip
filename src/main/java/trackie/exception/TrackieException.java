@@ -1,3 +1,5 @@
+package trackie.exception;
+
 /**
  * Represents an invalid command or input that Trackie can explain to the user.
  */

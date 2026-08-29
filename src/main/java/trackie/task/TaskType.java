@@ -1,3 +1,5 @@
+package trackie.task;
+
 /**
  * Identifies the supported task types and their display icons.
  */
