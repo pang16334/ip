@@ -24,4 +24,14 @@ public class Deadline extends Task {
     public String toString() {
         return super.toString() + " (by: " + this.by + ")";
     }
+
+    /**
+     * Returns a data-file line containing this deadline's due time.
+     *
+     * @return serialized deadline
+     */
+    @Override
+    public String toDataString() {
+        return super.toDataString() + " | " + this.by;
+    }
 }

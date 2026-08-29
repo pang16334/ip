@@ -75,13 +75,14 @@ def main() -> int:
         for name, input_path, expected_path in cases:
             user_input = input_path.read_text(encoding="utf-8")
             expected = normalize_newlines(expected_path.read_text(encoding="utf-8"))
-            result = subprocess.run(
-                [java, "-cp", build_directory, "Trackie"],
-                cwd=repository,
-                input=user_input,
-                capture_output=True,
-                text=True,
-            )
+            with tempfile.TemporaryDirectory(prefix="trackie-ui-case-") as case_directory:
+                result = subprocess.run(
+                    [java, "-cp", build_directory, "Trackie"],
+                    cwd=case_directory,
+                    input=user_input,
+                    capture_output=True,
+                    text=True,
+                )
             actual = normalize_newlines(result.stdout)
 
             print(f"=== {name}: INPUT ===")
