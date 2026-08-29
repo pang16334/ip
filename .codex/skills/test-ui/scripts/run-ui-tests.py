@@ -75,25 +75,35 @@ def main() -> int:
         for name, input_path, expected_path in cases:
             user_input = input_path.read_text(encoding="utf-8")
             expected = normalize_newlines(expected_path.read_text(encoding="utf-8"))
+            session_inputs = user_input.split("--- RESTART ---\n")
             with tempfile.TemporaryDirectory(prefix="trackie-ui-case-") as case_directory:
-                result = subprocess.run(
-                    [java, "-cp", build_directory, "Trackie"],
-                    cwd=case_directory,
-                    input=user_input,
-                    capture_output=True,
-                    text=True,
-                )
-            actual = normalize_newlines(result.stdout)
+                actual_parts = []
+                return_code = 0
+                standard_error = ""
+                for session_input in session_inputs:
+                    result = subprocess.run(
+                        [java, "-cp", build_directory, "Trackie"],
+                        cwd=case_directory,
+                        input=session_input,
+                        capture_output=True,
+                        text=True,
+                    )
+                    actual_parts.append(result.stdout)
+                    return_code = result.returncode
+                    standard_error += result.stderr
+                    if return_code != 0:
+                        break
+            actual = normalize_newlines("".join(actual_parts))
 
             print(f"=== {name}: INPUT ===")
             print(user_input, end="" if user_input.endswith("\n") else "\n")
             print(f"=== {name}: OUTPUT ===")
             print(actual, end="" if actual.endswith("\n") else "\n")
 
-            if result.returncode != 0 or actual != expected:
+            if return_code != 0 or actual != expected:
                 print(f"FAILED: {name}", file=sys.stderr)
-                if result.stderr:
-                    print(result.stderr, file=sys.stderr)
+                if standard_error:
+                    print(standard_error, file=sys.stderr)
                 print("".join(difflib.unified_diff(
                     expected.splitlines(keepends=True),
                     actual.splitlines(keepends=True),

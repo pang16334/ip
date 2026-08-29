@@ -16,8 +16,14 @@ public class Trackie {
         System.out.println("Hello! I'm Trackie.");
         System.out.println("What can I do for you today?");
 
-        ArrayList<Task> tasks = new ArrayList<>();
         Storage storage = new Storage("data/trackie.txt");
+        ArrayList<Task> tasks;
+        try {
+            tasks = storage.loadTasks();
+        } catch (TrackieException exception) {
+            System.out.println(exception.getMessage());
+            tasks = new ArrayList<>();
+        }
 
         try (Scanner scanner = new Scanner(System.in)) {
             while (scanner.hasNextLine()) {

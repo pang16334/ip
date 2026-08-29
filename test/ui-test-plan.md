@@ -8,3 +8,4 @@ Each case runs in a fresh Trackie process. Input and expected-output paths are r
 | Verify minimal Level 5 errors preserve task state | ui/level5-minimal-input.txt | ui/level5-minimal-expected.txt |
 | Verify malformed Level 5 commands preserve valid state | ui/level5-errors-input.txt | ui/level5-errors-expected.txt |
 | Verify deletion and automatic task renumbering | ui/level6-delete-input.txt | ui/level6-delete-expected.txt |
+| Verify saved tasks load after restarting Trackie | ui/level7-load-input.txt | ui/level7-load-expected.txt |
