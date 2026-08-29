@@ -1,3 +1,12 @@
+package trackie;
+
+import trackie.exception.TrackieException;
+import trackie.parser.Parser;
+import trackie.storage.Storage;
+import trackie.task.Task;
+import trackie.task.TaskList;
+import trackie.ui.Ui;
+
 /** Coordinates Trackie's user interface, task list, parser, and storage. */
 public class Trackie {
     private final Storage storage;

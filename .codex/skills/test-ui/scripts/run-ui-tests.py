@@ -53,7 +53,7 @@ def main() -> int:
     """Compile the application and run each planned test case."""
     repository = Path(sys.argv[1] if len(sys.argv) > 1 else ".").resolve()
     plan_path = repository / "test" / "ui-test-plan.md"
-    source_files = sorted((repository / "src" / "main" / "java").glob("*.java"))
+    source_files = sorted((repository / "src" / "main" / "java").rglob("*.java"))
     cases = read_cases(plan_path)
 
     if not source_files:
@@ -92,7 +92,7 @@ def main() -> int:
                 standard_error = ""
                 for session_input in session_inputs:
                     result = subprocess.run(
-                        [java, "-cp", build_directory, "Trackie"],
+                        [java, "-cp", build_directory, "trackie.Trackie"],
                         cwd=case_directory,
                         input=session_input,
                         capture_output=True,

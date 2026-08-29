@@ -1,5 +1,13 @@
+package trackie.parser;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+
+import trackie.exception.TrackieException;
+import trackie.task.Deadline;
+import trackie.task.Event;
+import trackie.task.Task;
+import trackie.task.Todo;
 
 /** Converts user commands into validated task data. */
 public class Parser {
