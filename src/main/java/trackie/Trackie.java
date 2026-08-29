@@ -87,6 +87,9 @@ public class Trackie {
         case "event":
             addTask(Parser.parseEvent(command));
             break;
+        case "find":
+            this.ui.showMatchingTasks(this.tasks.find(Parser.parseFindKeyword(command)));
+            break;
         default:
             throw unknownCommandException();
         }
