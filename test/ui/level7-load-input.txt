@@ -1,6 +1,6 @@
 todo read book
-deadline return book /by Sunday
-event meeting /from Mon /to Tue
+deadline return book /by 2026-09-15
+event meeting /from 2026-09-20 /to 2026-09-21
 mark 2
 bye
 --- RESTART ---
