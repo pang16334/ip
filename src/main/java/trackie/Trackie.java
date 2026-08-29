@@ -13,7 +13,11 @@ public class Trackie {
     private final TaskList tasks;
     private final Ui ui;
 
-    /** @param filePath relative path of the task data file */
+    /**
+     * Creates Trackie and loads tasks from the configured data file.
+     *
+     * @param filePath relative path of the task data file
+     */
     public Trackie(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
@@ -45,7 +49,11 @@ public class Trackie {
         }
     }
 
-    /** @param args command-line arguments, which are not used */
+    /**
+     * Starts Trackie using the default relative data file.
+     *
+     * @param args command-line arguments, which are not used
+     */
     public static void main(String[] args) {
         new Trackie("data/trackie.txt").run();
     }
