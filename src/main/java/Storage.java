@@ -114,7 +114,11 @@ public class Storage {
             }
             break;
         case "E":
-            task = new Event(fields[2], fields[3], fields[4]);
+            try {
+                task = new Event(fields[2], LocalDate.parse(fields[3]), LocalDate.parse(fields[4]));
+            } catch (DateTimeParseException exception) {
+                throw corruptedDataException(lineNumber);
+            }
             break;
         default:
             throw corruptedDataException(lineNumber);

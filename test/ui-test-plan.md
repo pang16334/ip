@@ -10,3 +10,4 @@ Each case runs in a fresh Trackie process. Input and expected-output paths are r
 | Verify deletion and automatic task renumbering | ui/level6-delete-input.txt | ui/level6-delete-expected.txt |
 | Verify saved tasks load after restarting Trackie | ui/level7-load-input.txt | ui/level7-load-expected.txt |
 | Verify corrupted saved data is handled and recoverable | ui/level7-corrupt-input.txt | ui/level7-corrupt-expected.txt |
+| Verify Level 8 date parsing, formatting, validation, and persistence | ui/level8-dates-input.txt | ui/level8-dates-expected.txt |

@@ -189,6 +189,10 @@ public class Trackie {
         if (to.isEmpty()) {
             throw new TrackieException("Oops! An event needs an end after /to.");
         }
-        return new Event(description, from, to);
+        try {
+            return new Event(description, LocalDate.parse(from), LocalDate.parse(to));
+        } catch (DateTimeParseException exception) {
+            throw new TrackieException("Oops! Use event dates in yyyy-MM-dd format.");
+        }
     }
 }

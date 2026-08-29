@@ -1,0 +1,8 @@
+deadline invalid deadline /by 15-09-2026
+event invalid event /from tomorrow /to 2026-09-21
+deadline submit report /by 2026-09-15
+event project demo /from 2026-09-20 /to 2026-09-21
+bye
+--- RESTART ---
+list
+bye
