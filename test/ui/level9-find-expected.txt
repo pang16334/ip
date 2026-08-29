@@ -1,0 +1,25 @@
+ _______             _    _
+|__   __|           | |  (_)
+   | |_ __ __ _  ___| | ___  ___
+   | | '__/ _` |/ __| |/ / |/ _ \
+   | | | | (_| | (__|   <| |  __/
+   |_|_|  \__,_|\___|_|\_\_|\___|
+
+Hello! I'm Trackie.
+What can I do for you today?
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 task in the list.
+Got it. I've added this task:
+  [D][ ] return book (by: Sep 15 2026)
+Now you have 2 tasks in the list.
+Got it. I've added this task:
+  [E][ ] book club (from: Sep 20 2026 to: Sep 21 2026)
+Now you have 3 tasks in the list.
+Here are the matching tasks in your list:
+1.[T][ ] read book
+2.[D][ ] return book (by: Sep 15 2026)
+3.[E][ ] book club (from: Sep 20 2026 to: Sep 21 2026)
+Here are the matching tasks in your list:
+Oops! Please specify a keyword after find.
+Bye! Consistency is the key. Hope to see you again soon!

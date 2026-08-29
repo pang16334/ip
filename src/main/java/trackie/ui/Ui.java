@@ -1,5 +1,6 @@
 package trackie.ui;
 
+import java.util.List;
 import java.util.Scanner;
 
 import trackie.task.Task;
@@ -35,6 +36,14 @@ public class Ui implements AutoCloseable {
     /** Displays all tasks with one-based numbering. */
     public void showTaskList(TaskList tasks) {
         System.out.println("Here are the tasks in your list:");
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i + 1) + "." + tasks.get(i));
+        }
+    }
+
+    /** Displays matching tasks with one-based result numbering. */
+    public void showMatchingTasks(List<Task> tasks) {
+        System.out.println("Here are the matching tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + "." + tasks.get(i));
         }

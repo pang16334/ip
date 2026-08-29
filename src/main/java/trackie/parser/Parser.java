@@ -94,4 +94,13 @@ public class Parser {
             throw new TrackieException("Oops! Use event dates in yyyy-MM-dd format.");
         }
     }
+
+    /** Parses and validates the keyword in a find command. */
+    public static String parseFindKeyword(String command) throws TrackieException {
+        String keyword = command.substring("find".length()).trim();
+        if (keyword.isEmpty()) {
+            throw new TrackieException("Oops! Please specify a keyword after find.");
+        }
+        return keyword;
+    }
 }

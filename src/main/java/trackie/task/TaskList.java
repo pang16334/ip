@@ -41,4 +41,11 @@ public class TaskList {
     public List<Task> asList() {
         return List.copyOf(this.tasks);
     }
+
+    /** @return tasks whose descriptions contain the given keyword */
+    public List<Task> find(String keyword) {
+        return this.tasks.stream()
+                .filter(task -> task.containsKeyword(keyword))
+                .toList();
+    }
 }
