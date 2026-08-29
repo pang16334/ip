@@ -1,5 +1,5 @@
 todo read book
-deadline return book /by Sunday
+deadline return book /by 2026-09-15
 event meeting /from Mon /to Tue
 mark 2
 bye

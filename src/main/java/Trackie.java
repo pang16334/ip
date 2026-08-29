@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -154,7 +156,11 @@ public class Trackie {
         if (by.isEmpty()) {
             throw new TrackieException("Oops! A deadline needs a due date or time after /by.");
         }
-        return new Deadline(description, by);
+        try {
+            return new Deadline(description, LocalDate.parse(by));
+        } catch (DateTimeParseException exception) {
+            throw new TrackieException("Oops! Use a deadline date in yyyy-MM-dd format.");
+        }
     }
 
     /**
