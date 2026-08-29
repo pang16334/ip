@@ -1,0 +1,27 @@
+ _______             _    _
+|__   __|           | |  (_)
+   | |_ __ __ _  ___| | ___  ___
+   | | '__/ _` |/ __| |/ / |/ _ \
+   | | | | (_| | (__|   <| |  __/
+   |_|_|  \__,_|\___|_|\_\_|\___|
+
+Hello! I'm Trackie.
+What can I do for you today?
+Oops! Saved task data is corrupted at line 2.
+Here are the tasks in your list:
+Got it. I've added this task:
+  [T][ ] recovered task
+Now you have 1 task in the list.
+Bye! Consistency is the key. Hope to see you again soon!
+ _______             _    _
+|__   __|           | |  (_)
+   | |_ __ __ _  ___| | ___  ___
+   | | '__/ _` |/ __| |/ / |/ _ \
+   | | | | (_| | (__|   <| |  __/
+   |_|_|  \__,_|\___|_|\_\_|\___|
+
+Hello! I'm Trackie.
+What can I do for you today?
+Here are the tasks in your list:
+1.[T][ ] recovered task
+Bye! Consistency is the key. Hope to see you again soon!

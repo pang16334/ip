@@ -16,7 +16,14 @@ public class Trackie {
         System.out.println("Hello! I'm Trackie.");
         System.out.println("What can I do for you today?");
 
-        ArrayList<Task> tasks = new ArrayList<>();
+        Storage storage = new Storage("data/trackie.txt");
+        ArrayList<Task> tasks;
+        try {
+            tasks = storage.loadTasks();
+        } catch (TrackieException exception) {
+            System.out.println(exception.getMessage());
+            tasks = new ArrayList<>();
+        }
 
         try (Scanner scanner = new Scanner(System.in)) {
             while (scanner.hasNextLine()) {
@@ -34,16 +41,19 @@ public class Trackie {
                     } else if (command.equals("mark") || command.startsWith("mark ")) {
                         int taskIndex = parseTaskIndex(command, "mark", tasks.size());
                         tasks.get(taskIndex).markAsDone();
+                        storage.saveTasks(tasks);
                         System.out.println("Nice! I've marked this task as done:");
                         System.out.println("  " + tasks.get(taskIndex));
                     } else if (command.equals("unmark") || command.startsWith("unmark ")) {
                         int taskIndex = parseTaskIndex(command, "unmark", tasks.size());
                         tasks.get(taskIndex).markAsNotDone();
+                        storage.saveTasks(tasks);
                         System.out.println("OK, I've marked this task as not done yet:");
                         System.out.println("  " + tasks.get(taskIndex));
                     } else if (command.equals("delete") || command.startsWith("delete ")) {
                         int taskIndex = parseTaskIndex(command, "delete", tasks.size());
                         Task removedTask = tasks.remove(taskIndex);
+                        storage.saveTasks(tasks);
                         String taskWord = tasks.size() == 1 ? "task" : "tasks";
                         System.out.println("Noted. I've removed this task:");
                         System.out.println("  " + removedTask);
@@ -54,13 +64,13 @@ public class Trackie {
                             throw new TrackieException("Oops! A todo needs a description.");
                         }
                         Task task = new Todo(description);
-                        addTask(tasks, task);
+                        addTask(tasks, task, storage);
                     } else if (command.equals("deadline") || command.startsWith("deadline ")) {
                         Task task = parseDeadline(command);
-                        addTask(tasks, task);
+                        addTask(tasks, task, storage);
                     } else if (command.equals("event") || command.startsWith("event ")) {
                         Task task = parseEvent(command);
-                        addTask(tasks, task);
+                        addTask(tasks, task, storage);
                     } else {
                         throw new TrackieException("Oops! I don't recognize that command.");
                     }
@@ -76,9 +86,13 @@ public class Trackie {
      *
      * @param tasks list in which tasks are stored
      * @param task task to add
+     * @param storage storage used to save the updated list
+     * @throws TrackieException if the updated list cannot be saved
      */
-    private static void addTask(ArrayList<Task> tasks, Task task) {
+    private static void addTask(ArrayList<Task> tasks, Task task, Storage storage)
+            throws TrackieException {
         tasks.add(task);
+        storage.saveTasks(tasks);
         String taskWord = tasks.size() == 1 ? "task" : "tasks";
 
         System.out.println("Got it. I've added this task:");

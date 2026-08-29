@@ -27,4 +27,14 @@ public class Event extends Task {
     public String toString() {
         return super.toString() + " (from: " + this.from + " to: " + this.to + ")";
     }
+
+    /**
+     * Returns a data-file line containing this event's start and end times.
+     *
+     * @return serialized event
+     */
+    @Override
+    public String toDataString() {
+        return super.toDataString() + " | " + this.from + " | " + this.to;
+    }
 }

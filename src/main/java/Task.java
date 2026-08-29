@@ -42,6 +42,16 @@ public abstract class Task {
     }
 
     /**
+     * Returns a line representing this task in Trackie's data-file format.
+     *
+     * @return serialized task type, status, and description
+     */
+    public String toDataString() {
+        String doneValue = this.isDone ? "1" : "0";
+        return this.type.getIcon() + " | " + doneValue + " | " + this.description;
+    }
+
+    /**
      * Returns the task in a form suitable for display to the user.
      *
      * @return formatted completion status and description
