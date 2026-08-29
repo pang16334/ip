@@ -74,9 +74,19 @@ def main() -> int:
 
         for name, input_path, expected_path in cases:
             user_input = input_path.read_text(encoding="utf-8")
+            displayed_input = user_input
             expected = normalize_newlines(expected_path.read_text(encoding="utf-8"))
+            initial_data = None
+            if user_input.startswith("--- DATA FILE ---\n"):
+                initial_data, user_input = user_input.removeprefix("--- DATA FILE ---\n").split(
+                    "--- START ---\n", 1
+                )
             session_inputs = user_input.split("--- RESTART ---\n")
             with tempfile.TemporaryDirectory(prefix="trackie-ui-case-") as case_directory:
+                if initial_data is not None:
+                    data_directory = Path(case_directory) / "data"
+                    data_directory.mkdir()
+                    (data_directory / "trackie.txt").write_text(initial_data, encoding="utf-8")
                 actual_parts = []
                 return_code = 0
                 standard_error = ""
@@ -96,7 +106,7 @@ def main() -> int:
             actual = normalize_newlines("".join(actual_parts))
 
             print(f"=== {name}: INPUT ===")
-            print(user_input, end="" if user_input.endswith("\n") else "\n")
+            print(displayed_input, end="" if displayed_input.endswith("\n") else "\n")
             print(f"=== {name}: OUTPUT ===")
             print(actual, end="" if actual.endswith("\n") else "\n")
 

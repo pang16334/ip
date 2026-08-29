@@ -54,8 +54,9 @@ public class Storage {
 
         try {
             ArrayList<Task> tasks = new ArrayList<>();
-            for (String line : Files.readAllLines(this.filePath, StandardCharsets.UTF_8)) {
-                tasks.add(parseTask(line));
+            List<String> lines = Files.readAllLines(this.filePath, StandardCharsets.UTF_8);
+            for (int i = 0; i < lines.size(); i++) {
+                tasks.add(parseTask(lines.get(i), i + 1));
             }
             return tasks;
         } catch (IOException exception) {
@@ -67,11 +68,37 @@ public class Storage {
      * Reconstructs one task from a line in the data file.
      *
      * @param line serialized task
+     * @param lineNumber one-based line number used in error messages
      * @return reconstructed task
-     * @throws TrackieException if the task type is unknown
+     * @throws TrackieException if the serialized task is malformed
      */
-    private Task parseTask(String line) throws TrackieException {
+    private Task parseTask(String line, int lineNumber) throws TrackieException {
         String[] fields = line.split(" \\| ", -1);
+        int expectedFieldCount;
+        switch (fields[0]) {
+        case "T":
+            expectedFieldCount = 3;
+            break;
+        case "D":
+            expectedFieldCount = 4;
+            break;
+        case "E":
+            expectedFieldCount = 5;
+            break;
+        default:
+            throw corruptedDataException(lineNumber);
+        }
+
+        if (fields.length != expectedFieldCount
+                || (!fields[1].equals("0") && !fields[1].equals("1"))) {
+            throw corruptedDataException(lineNumber);
+        }
+        for (int i = 2; i < fields.length; i++) {
+            if (fields[i].isBlank()) {
+                throw corruptedDataException(lineNumber);
+            }
+        }
+
         Task task;
         switch (fields[0]) {
         case "T":
@@ -84,12 +111,22 @@ public class Storage {
             task = new Event(fields[2], fields[3], fields[4]);
             break;
         default:
-            throw new TrackieException("Oops! The saved task file contains an unknown task type.");
+            throw corruptedDataException(lineNumber);
         }
 
         if (fields[1].equals("1")) {
             task.markAsDone();
         }
         return task;
+    }
+
+    /**
+     * Creates a consistent exception for malformed saved data.
+     *
+     * @param lineNumber one-based location of the malformed data
+     * @return exception describing the corrupted line
+     */
+    private TrackieException corruptedDataException(int lineNumber) {
+        return new TrackieException("Oops! Saved task data is corrupted at line " + lineNumber + ".");
     }
 }
