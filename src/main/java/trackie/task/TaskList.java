@@ -12,32 +12,58 @@ public class TaskList {
         this.tasks = new ArrayList<>();
     }
 
-    /** @param tasks tasks loaded from storage */
+    /**
+     * Creates a task list containing the supplied tasks.
+     *
+     * @param tasks tasks loaded from storage
+     */
     public TaskList(List<Task> tasks) {
         this.tasks = new ArrayList<>(tasks);
     }
 
-    /** @return number of tasks in the list */
+    /**
+     * Returns the number of stored tasks.
+     *
+     * @return number of tasks in the list
+     */
     public int size() {
         return this.tasks.size();
     }
 
-    /** @return task at the given zero-based index */
+    /**
+     * Returns the task at a zero-based index.
+     *
+     * @param index zero-based index of the task
+     * @return task at the given index
+     */
     public Task get(int index) {
         return this.tasks.get(index);
     }
 
-    /** @param task task to append */
+    /**
+     * Appends a task to the list.
+     *
+     * @param task task to append
+     */
     public void add(Task task) {
         this.tasks.add(task);
     }
 
-    /** @return task removed from the given zero-based index */
+    /**
+     * Removes and returns the task at a zero-based index.
+     *
+     * @param index zero-based index of the task
+     * @return removed task
+     */
     public Task remove(int index) {
         return this.tasks.remove(index);
     }
 
-    /** @return read-only snapshot suitable for saving */
+    /**
+     * Creates a read-only snapshot of the current tasks.
+     *
+     * @return task snapshot suitable for saving
+     */
     public List<Task> asList() {
         return List.copyOf(this.tasks);
     }

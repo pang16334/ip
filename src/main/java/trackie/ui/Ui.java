@@ -13,7 +13,12 @@ public class Ui implements AutoCloseable {
             + "   | | '__/ _` |/ __| |/ / |/ _ \\\n"
             + "   | | | | (_| | (__|   <| |  __/\n"
             + "   |_|_|  \\__,_|\\___|_|\\_\\_|\\___|\n";
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
+
+    /** Creates a UI that reads commands from standard input. */
+    public Ui() {
+        this.scanner = new Scanner(System.in);
+    }
 
     /** Displays Trackie's greeting. */
     public void showWelcome() {
@@ -22,17 +27,29 @@ public class Ui implements AutoCloseable {
         System.out.println("What can I do for you today?");
     }
 
-    /** @return whether another command is available */
+    /**
+     * Checks whether another command is available on standard input.
+     *
+     * @return true if another command can be read
+     */
     public boolean hasNextCommand() {
         return this.scanner.hasNextLine();
     }
 
-    /** @return the next command entered by the user */
+    /**
+     * Reads the next command from standard input.
+     *
+     * @return next command entered by the user
+     */
     public String readCommand() {
         return this.scanner.nextLine();
     }
 
-    /** Displays all tasks with one-based numbering. */
+    /**
+     * Displays all tasks with one-based numbering.
+     *
+     * @param tasks tasks to display
+     */
     public void showTaskList(TaskList tasks) {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
@@ -40,33 +57,55 @@ public class Ui implements AutoCloseable {
         }
     }
 
-    /** Displays a successful mark operation. */
+    /**
+     * Displays a successful mark operation.
+     *
+     * @param task task that was marked
+     */
     public void showMarked(Task task) {
         System.out.println("Nice! I've marked this task as done:");
         System.out.println("  " + task);
     }
 
-    /** Displays a successful unmark operation. */
+    /**
+     * Displays a successful unmark operation.
+     *
+     * @param task task that was unmarked
+     */
     public void showUnmarked(Task task) {
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println("  " + task);
     }
 
-    /** Displays a successful task removal. */
+    /**
+     * Displays a successful task removal and the remaining count.
+     *
+     * @param task task that was removed
+     * @param taskCount number of remaining tasks
+     */
     public void showDeleted(Task task, int taskCount) {
         System.out.println("Noted. I've removed this task:");
         System.out.println("  " + task);
         showTaskCount(taskCount);
     }
 
-    /** Displays a successful task addition. */
+    /**
+     * Displays a successful task addition and the updated count.
+     *
+     * @param task task that was added
+     * @param taskCount updated number of tasks
+     */
     public void showAdded(Task task, int taskCount) {
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + task);
         showTaskCount(taskCount);
     }
 
-    /** Displays an error without exposing implementation details. */
+    /**
+     * Displays an error without exposing implementation details.
+     *
+     * @param message user-facing error explanation
+     */
     public void showError(String message) {
         System.out.println(message);
     }

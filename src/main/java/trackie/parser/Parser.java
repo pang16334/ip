@@ -11,14 +11,30 @@ import trackie.task.Todo;
 
 /** Converts user commands into validated task data. */
 public class Parser {
-    /** @return the first word that identifies the command */
+    private Parser() {
+    }
+
+    /**
+     * Extracts the first word that identifies a command.
+     *
+     * @param command full command entered by the user
+     * @return command word, or an empty string for blank input
+     */
     public static String getCommandWord(String command) {
         String trimmedCommand = command.trim();
         int firstSpace = trimmedCommand.indexOf(' ');
         return firstSpace < 0 ? trimmedCommand : trimmedCommand.substring(0, firstSpace);
     }
 
-    /** Parses the task number in a mark, unmark, or delete command. */
+    /**
+     * Parses and validates the task number in a mark, unmark, or delete command.
+     *
+     * @param command full command entered by the user
+     * @param commandName name of the command being parsed
+     * @param taskCount number of tasks currently stored
+     * @return zero-based index of the selected task
+     * @throws TrackieException if the number is missing, invalid, or out of range
+     */
     public static int parseTaskIndex(String command, String commandName, int taskCount)
             throws TrackieException {
         if (taskCount == 0) {
@@ -39,7 +55,13 @@ public class Parser {
         }
     }
 
-    /** Parses a todo command. */
+    /**
+     * Parses and validates a todo command.
+     *
+     * @param command full todo command
+     * @return todo represented by the command
+     * @throws TrackieException if the description is missing
+     */
     public static Task parseTodo(String command) throws TrackieException {
         String description = command.substring("todo".length()).trim();
         if (description.isEmpty()) {
@@ -48,7 +70,13 @@ public class Parser {
         return new Todo(description);
     }
 
-    /** Parses a deadline command and its ISO date. */
+    /**
+     * Parses and validates a deadline command and its ISO date.
+     *
+     * @param command full deadline command
+     * @return deadline represented by the command
+     * @throws TrackieException if required data is missing or the date is invalid
+     */
     public static Task parseDeadline(String command) throws TrackieException {
         int byIndex = command.indexOf(" /by");
         if (byIndex < 0) {
@@ -69,7 +97,13 @@ public class Parser {
         }
     }
 
-    /** Parses an event command and its two ISO dates. */
+    /**
+     * Parses and validates an event command and its two ISO dates.
+     *
+     * @param command full event command
+     * @return event represented by the command
+     * @throws TrackieException if required data is missing or either date is invalid
+     */
     public static Task parseEvent(String command) throws TrackieException {
         int fromIndex = command.indexOf(" /from");
         int toIndex = command.indexOf(" /to");

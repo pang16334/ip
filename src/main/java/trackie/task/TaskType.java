@@ -4,8 +4,11 @@ package trackie.task;
  * Identifies the supported task types and their display icons.
  */
 public enum TaskType {
+    /** A task without a date. */
     TODO("T"),
+    /** A task with a due date. */
     DEADLINE("D"),
+    /** A task with start and end dates. */
     EVENT("E");
 
     private final String icon;
