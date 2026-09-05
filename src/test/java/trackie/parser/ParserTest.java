@@ -17,8 +17,8 @@ public class ParserTest {
 
     @Test
     public void parseTaskIndex_outOfRangeNumber_throwsTrackieException() {
-        TrackieException exception = assertThrows(TrackieException.class,
-                () -> Parser.parseTaskIndex("delete 4", "delete", 3));
+        TrackieException exception = assertThrows(TrackieException.class, () -> Parser.parseTaskIndex(
+                "delete 4", "delete", 3));
 
         assertEquals("Oops! Choose a task number between 1 and 3.", exception.getMessage());
     }
@@ -32,8 +32,8 @@ public class ParserTest {
 
     @Test
     public void parseDeadline_invalidDate_throwsTrackieException() {
-        TrackieException exception = assertThrows(TrackieException.class,
-                () -> Parser.parseDeadline("deadline submit report /by 15-09-2026"));
+        TrackieException exception = assertThrows(TrackieException.class, () -> Parser.parseDeadline(
+                "deadline submit report /by 15-09-2026"));
 
         assertEquals("Oops! Use a deadline date in yyyy-MM-dd format.", exception.getMessage());
     }
