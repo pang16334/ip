@@ -61,37 +61,37 @@ public class Trackie {
     private boolean execute(String command) throws TrackieException {
         String commandWord = Parser.getCommandWord(command);
         switch (commandWord) {
-        case "bye":
-            requireExactCommand(command, "bye");
-            this.ui.showGoodbye();
-            return false;
-        case "list":
-            requireExactCommand(command, "list");
-            this.ui.showTaskList(this.tasks);
-            break;
-        case "mark":
-            updateTaskStatus(command, true);
-            break;
-        case "unmark":
-            updateTaskStatus(command, false);
-            break;
-        case "delete":
-            deleteTask(command);
-            break;
-        case "todo":
-            addTask(Parser.parseTodo(command));
-            break;
-        case "deadline":
-            addTask(Parser.parseDeadline(command));
-            break;
-        case "event":
-            addTask(Parser.parseEvent(command));
-            break;
-        case "find":
-            this.ui.showMatchingTasks(this.tasks.find(Parser.parseFindKeyword(command)));
-            break;
-        default:
-            throw unknownCommandException();
+            case "bye":
+                requireExactCommand(command, "bye");
+                this.ui.showGoodbye();
+                return false;
+            case "list":
+                requireExactCommand(command, "list");
+                this.ui.showTaskList(this.tasks);
+                break;
+            case "mark":
+                updateTaskStatus(command, true);
+                break;
+            case "unmark":
+                updateTaskStatus(command, false);
+                break;
+            case "delete":
+                deleteTask(command);
+                break;
+            case "todo":
+                addTask(Parser.parseTodo(command));
+                break;
+            case "deadline":
+                addTask(Parser.parseDeadline(command));
+                break;
+            case "event":
+                addTask(Parser.parseEvent(command));
+                break;
+            case "find":
+                this.ui.showMatchingTasks(this.tasks.find(Parser.parseFindKeyword(command)));
+                break;
+            default:
+                throw unknownCommandException();
         }
         return true;
     }

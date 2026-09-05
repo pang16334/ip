@@ -86,17 +86,17 @@ public class Storage {
         String[] fields = line.split(" \\| ", -1);
         int expectedFieldCount;
         switch (fields[0]) {
-        case "T":
-            expectedFieldCount = 3;
-            break;
-        case "D":
-            expectedFieldCount = 4;
-            break;
-        case "E":
-            expectedFieldCount = 5;
-            break;
-        default:
-            throw corruptedDataException(lineNumber);
+            case "T":
+                expectedFieldCount = 3;
+                break;
+            case "D":
+                expectedFieldCount = 4;
+                break;
+            case "E":
+                expectedFieldCount = 5;
+                break;
+            default:
+                throw corruptedDataException(lineNumber);
         }
 
         if (fields.length != expectedFieldCount
@@ -111,25 +111,25 @@ public class Storage {
 
         Task task;
         switch (fields[0]) {
-        case "T":
-            task = new Todo(fields[2]);
-            break;
-        case "D":
-            try {
-                task = new Deadline(fields[2], LocalDate.parse(fields[3]));
-            } catch (DateTimeParseException exception) {
+            case "T":
+                task = new Todo(fields[2]);
+                break;
+            case "D":
+                try {
+                    task = new Deadline(fields[2], LocalDate.parse(fields[3]));
+                } catch (DateTimeParseException exception) {
+                    throw corruptedDataException(lineNumber);
+                }
+                break;
+            case "E":
+                try {
+                    task = new Event(fields[2], LocalDate.parse(fields[3]), LocalDate.parse(fields[4]));
+                } catch (DateTimeParseException exception) {
+                    throw corruptedDataException(lineNumber);
+                }
+                break;
+            default:
                 throw corruptedDataException(lineNumber);
-            }
-            break;
-        case "E":
-            try {
-                task = new Event(fields[2], LocalDate.parse(fields[3]), LocalDate.parse(fields[4]));
-            } catch (DateTimeParseException exception) {
-                throw corruptedDataException(lineNumber);
-            }
-            break;
-        default:
-            throw corruptedDataException(lineNumber);
         }
 
         if (fields[1].equals("1")) {
