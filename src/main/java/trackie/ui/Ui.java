@@ -1,5 +1,6 @@
 package trackie.ui;
 
+import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,17 +16,29 @@ public class Ui implements AutoCloseable {
             + "   | | | | (_| | (__|   <| |  __/\n"
             + "   |_|_|  \\__,_|\\___|_|\\_\\_|\\___|\n";
     private final Scanner scanner;
+    private final PrintStream output;
 
     /** Creates a UI that reads commands from standard input. */
     public Ui() {
-        this.scanner = new Scanner(System.in);
+        this(new Scanner(System.in), System.out);
+    }
+
+    /**
+     * Creates a UI using the supplied input and output channels.
+     *
+     * @param scanner source of user commands
+     * @param output destination for responses
+     */
+    public Ui(Scanner scanner, PrintStream output) {
+        this.scanner = scanner;
+        this.output = output;
     }
 
     /** Displays Trackie's greeting. */
     public void showWelcome() {
-        System.out.println(BANNER);
-        System.out.println("Hello! I'm Trackie.");
-        System.out.println("What can I do for you today?");
+        this.output.println(BANNER);
+        this.output.println("Hello! I'm Trackie.");
+        this.output.println("What can I do for you today?");
     }
 
     /**
@@ -52,9 +65,9 @@ public class Ui implements AutoCloseable {
      * @param tasks tasks to display
      */
     public void showTaskList(TaskList tasks) {
-        System.out.println("Here are the tasks in your list:");
+        this.output.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + "." + tasks.get(i));
+            this.output.println((i + 1) + "." + tasks.get(i));
         }
     }
 
@@ -64,9 +77,9 @@ public class Ui implements AutoCloseable {
      * @param tasks matching tasks to display
      */
     public void showMatchingTasks(List<Task> tasks) {
-        System.out.println("Here are the matching tasks in your list:");
+        this.output.println("Here are the matching tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + "." + tasks.get(i));
+            this.output.println((i + 1) + "." + tasks.get(i));
         }
     }
 
@@ -76,8 +89,8 @@ public class Ui implements AutoCloseable {
      * @param task task that was marked
      */
     public void showMarked(Task task) {
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println("  " + task);
+        this.output.println("Nice! I've marked this task as done:");
+        this.output.println("  " + task);
     }
 
     /**
@@ -86,8 +99,8 @@ public class Ui implements AutoCloseable {
      * @param task task that was unmarked
      */
     public void showUnmarked(Task task) {
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println("  " + task);
+        this.output.println("OK, I've marked this task as not done yet:");
+        this.output.println("  " + task);
     }
 
     /**
@@ -97,8 +110,8 @@ public class Ui implements AutoCloseable {
      * @param taskCount number of remaining tasks
      */
     public void showDeleted(Task task, int taskCount) {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println("  " + task);
+        this.output.println("Noted. I've removed this task:");
+        this.output.println("  " + task);
         showTaskCount(taskCount);
     }
 
@@ -109,8 +122,8 @@ public class Ui implements AutoCloseable {
      * @param taskCount updated number of tasks
      */
     public void showAdded(Task task, int taskCount) {
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + task);
+        this.output.println("Got it. I've added this task:");
+        this.output.println("  " + task);
         showTaskCount(taskCount);
     }
 
@@ -120,17 +133,17 @@ public class Ui implements AutoCloseable {
      * @param message user-facing error explanation
      */
     public void showError(String message) {
-        System.out.println(message);
+        this.output.println(message);
     }
 
     /** Displays Trackie's farewell. */
     public void showGoodbye() {
-        System.out.println("Bye! Consistency is the key. Hope to see you again soon!");
+        this.output.println("Bye! Consistency is the key. Hope to see you again soon!");
     }
 
     private void showTaskCount(int taskCount) {
         String taskWord = taskCount == 1 ? "task" : "tasks";
-        System.out.println("Now you have " + taskCount + " " + taskWord + " in the list.");
+        this.output.println("Now you have " + taskCount + " " + taskWord + " in the list.");
     }
 
     /** Releases the input scanner when Trackie exits. */

@@ -12,3 +12,14 @@ Each case runs in a fresh Trackie process. Input and expected-output paths are r
 | Verify corrupted saved data is handled and recoverable | ui/level7-corrupt-input.txt | ui/level7-corrupt-expected.txt |
 | Verify Level 8 date parsing, formatting, validation, and persistence | ui/level8-dates-input.txt | ui/level8-dates-expected.txt |
 | Verify Level 9 keyword search and missing-keyword handling | ui/level9-find-input.txt | ui/level9-find-expected.txt |
+
+## Manual JavaFX checks
+
+Run `./gradlew run` and verify the following Level 10 behavior:
+
+- The Trackie window opens with Trackie's welcome message.
+- Chat bubbles, the command field, and the separate Send button have rounded styling and visible shadows.
+- Pressing Enter or clicking **Send** displays both the command and Trackie's response.
+- Adding, listing, marking, unmarking, deleting, and finding tasks gives the same responses as the text UI.
+- Invalid commands display a helpful error without closing the window.
+- Entering `bye` displays the farewell before the window closes.

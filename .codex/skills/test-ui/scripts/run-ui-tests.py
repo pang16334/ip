@@ -53,7 +53,11 @@ def main() -> int:
     """Compile the application and run each planned test case."""
     repository = Path(sys.argv[1] if len(sys.argv) > 1 else ".").resolve()
     plan_path = repository / "test" / "ui-test-plan.md"
-    source_files = sorted((repository / "src" / "main" / "java").rglob("*.java"))
+    java_source_root = repository / "src" / "main" / "java"
+    source_files = sorted(
+        path for path in java_source_root.rglob("*.java")
+        if "gui" not in path.relative_to(java_source_root).parts
+    )
     cases = read_cases(plan_path)
 
     if not source_files:

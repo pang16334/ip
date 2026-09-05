@@ -19,7 +19,17 @@ public class Trackie {
      * @param filePath relative path of the task data file
      */
     public Trackie(String filePath) {
-        this.ui = new Ui();
+        this(filePath, new Ui());
+    }
+
+    /**
+     * Creates Trackie with a specific user interface and loads saved tasks.
+     *
+     * @param filePath relative path of the task data file
+     * @param ui user interface used for input and output
+     */
+    public Trackie(String filePath, Ui ui) {
+        this.ui = ui;
         this.storage = new Storage(filePath);
         this.ui.showWelcome();
 
@@ -38,12 +48,8 @@ public class Trackie {
         try (this.ui) {
             while (this.ui.hasNextCommand()) {
                 String command = this.ui.readCommand();
-                try {
-                    if (!execute(command)) {
-                        return;
-                    }
-                } catch (TrackieException exception) {
-                    this.ui.showError(exception.getMessage());
+                if (!processCommand(command)) {
+                    return;
                 }
             }
         }
@@ -56,6 +62,21 @@ public class Trackie {
      */
     public static void main(String[] args) {
         new Trackie("data/trackie.txt").run();
+    }
+
+    /**
+     * Processes one command and reports its result through the configured UI.
+     *
+     * @param command command to process
+     * @return false if Trackie should exit, or true otherwise
+     */
+    public boolean processCommand(String command) {
+        try {
+            return execute(command);
+        } catch (TrackieException exception) {
+            this.ui.showError(exception.getMessage());
+            return true;
+        }
     }
 
     private boolean execute(String command) throws TrackieException {
