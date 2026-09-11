@@ -84,21 +84,24 @@ public class Storage {
      */
     private Task parseTask(String line, int lineNumber) throws TrackieException {
         String[] fields = line.split(" \\| ", -1);
-        int expectedFieldCount;
-        switch (fields[0]) {
-            case "T":
-                expectedFieldCount = 3;
-                break;
-            case "D":
-                expectedFieldCount = 4;
-                break;
-            case "E":
-                expectedFieldCount = 5;
-                break;
-            default:
-                throw corruptedDataException(lineNumber);
-        }
+        int expectedFieldCount = getExpectedFieldCount(fields[0], lineNumber);
+        validateFields(fields, expectedFieldCount, lineNumber);
+        Task task = createTask(fields, lineNumber);
+        restoreTaskStatus(task, fields[1]);
+        return task;
+    }
 
+    private int getExpectedFieldCount(String taskType, int lineNumber) throws TrackieException {
+        return switch (taskType) {
+            case "T" -> 3;
+            case "D" -> 4;
+            case "E" -> 5;
+            default -> throw corruptedDataException(lineNumber);
+        };
+    }
+
+    private void validateFields(String[] fields, int expectedFieldCount, int lineNumber)
+            throws TrackieException {
         if (fields.length != expectedFieldCount
                 || (!fields[1].equals("0") && !fields[1].equals("1"))) {
             throw corruptedDataException(lineNumber);
@@ -108,34 +111,25 @@ public class Storage {
                 throw corruptedDataException(lineNumber);
             }
         }
+    }
 
-        Task task;
-        switch (fields[0]) {
-            case "T":
-                task = new Todo(fields[2]);
-                break;
-            case "D":
-                try {
-                    task = new Deadline(fields[2], LocalDate.parse(fields[3]));
-                } catch (DateTimeParseException exception) {
-                    throw corruptedDataException(lineNumber);
-                }
-                break;
-            case "E":
-                try {
-                    task = new Event(fields[2], LocalDate.parse(fields[3]), LocalDate.parse(fields[4]));
-                } catch (DateTimeParseException exception) {
-                    throw corruptedDataException(lineNumber);
-                }
-                break;
-            default:
-                throw corruptedDataException(lineNumber);
+    private Task createTask(String[] fields, int lineNumber) throws TrackieException {
+        try {
+            return switch (fields[0]) {
+                case "T" -> new Todo(fields[2]);
+                case "D" -> new Deadline(fields[2], LocalDate.parse(fields[3]));
+                case "E" -> new Event(fields[2], LocalDate.parse(fields[3]), LocalDate.parse(fields[4]));
+                default -> throw corruptedDataException(lineNumber);
+            };
+        } catch (DateTimeParseException exception) {
+            throw corruptedDataException(lineNumber);
         }
+    }
 
-        if (fields[1].equals("1")) {
+    private void restoreTaskStatus(Task task, String status) {
+        if (status.equals("1")) {
             task.markAsDone();
         }
-        return task;
     }
 
     /**
