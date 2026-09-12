@@ -3,6 +3,7 @@ package trackie.ui;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 import trackie.task.Task;
 import trackie.task.TaskList;
@@ -66,9 +67,7 @@ public class Ui implements AutoCloseable {
      */
     public void showTaskList(TaskList tasks) {
         this.output.println("Here are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            this.output.println((i + 1) + "." + tasks.get(i));
-        }
+        showNumberedTasks(tasks.asList());
     }
 
     /**
@@ -78,9 +77,7 @@ public class Ui implements AutoCloseable {
      */
     public void showMatchingTasks(List<Task> tasks) {
         this.output.println("Here are the matching tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            this.output.println((i + 1) + "." + tasks.get(i));
-        }
+        showNumberedTasks(tasks);
     }
 
     /**
@@ -144,6 +141,12 @@ public class Ui implements AutoCloseable {
     private void showTaskCount(int taskCount) {
         String taskWord = taskCount == 1 ? "task" : "tasks";
         this.output.println("Now you have " + taskCount + " " + taskWord + " in the list.");
+    }
+
+    private void showNumberedTasks(List<Task> tasks) {
+        IntStream.range(0, tasks.size())
+                .mapToObj(index -> (index + 1) + "." + tasks.get(index))
+                .forEach(this.output::println);
     }
 
     /** Releases the input scanner when Trackie exits. */
