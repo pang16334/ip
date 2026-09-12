@@ -18,6 +18,7 @@ public class TaskList {
      * @param tasks tasks loaded from storage
      */
     public TaskList(List<Task> tasks) {
+        assert tasks != null : "Initial task collection must not be null";
         this.tasks = new ArrayList<>(tasks);
     }
 
@@ -37,6 +38,7 @@ public class TaskList {
      * @return task at the given index
      */
     public Task get(int index) {
+        assert index >= 0 && index < this.tasks.size() : "Task index must be valid";
         return this.tasks.get(index);
     }
 
@@ -46,6 +48,7 @@ public class TaskList {
      * @param task task to append
      */
     public void add(Task task) {
+        assert task != null : "Task to add must not be null";
         this.tasks.add(task);
     }
 
@@ -56,6 +59,7 @@ public class TaskList {
      * @return removed task
      */
     public Task remove(int index) {
+        assert index >= 0 && index < this.tasks.size() : "Task index must be valid";
         return this.tasks.remove(index);
     }
 
