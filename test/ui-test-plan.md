@@ -12,6 +12,7 @@ Each case runs in a fresh Trackie process. Input and expected-output paths are r
 | Verify corrupted saved data is handled and recoverable | ui/level7-corrupt-input.txt | ui/level7-corrupt-expected.txt |
 | Verify Level 8 date parsing, formatting, validation, and persistence | ui/level8-dates-input.txt | ui/level8-dates-expected.txt |
 | Verify Level 9 keyword search and missing-keyword handling | ui/level9-find-input.txt | ui/level9-find-expected.txt |
+| Verify within-period validation, task operations, and persistence | ui/within-period-input.txt | ui/within-period-expected.txt |
 
 ## Manual JavaFX checks
 

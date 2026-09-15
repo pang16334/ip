@@ -14,6 +14,7 @@ import trackie.task.Deadline;
 import trackie.task.Event;
 import trackie.task.Task;
 import trackie.task.Todo;
+import trackie.task.WithinPeriod;
 
 /**
  * Saves Trackie's tasks to a file on the local disk.
@@ -96,6 +97,7 @@ public class Storage {
             case "T" -> 3;
             case "D" -> 4;
             case "E" -> 5;
+            case "W" -> 5;
             default -> throw corruptedDataException(lineNumber);
         };
     }
@@ -119,6 +121,8 @@ public class Storage {
                 case "T" -> new Todo(fields[2]);
                 case "D" -> new Deadline(fields[2], LocalDate.parse(fields[3]));
                 case "E" -> new Event(fields[2], LocalDate.parse(fields[3]), LocalDate.parse(fields[4]));
+                case "W" -> new WithinPeriod(fields[2], LocalDate.parse(fields[3]),
+                        LocalDate.parse(fields[4]));
                 default -> throw corruptedDataException(lineNumber);
             };
         } catch (DateTimeParseException exception) {

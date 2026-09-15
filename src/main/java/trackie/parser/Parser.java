@@ -8,6 +8,7 @@ import trackie.task.Deadline;
 import trackie.task.Event;
 import trackie.task.Task;
 import trackie.task.Todo;
+import trackie.task.WithinPeriod;
 
 /** Converts user commands into validated task data. */
 public class Parser {
@@ -126,6 +127,43 @@ public class Parser {
             return new Event(description, LocalDate.parse(from), LocalDate.parse(to));
         } catch (DateTimeParseException exception) {
             throw new TrackieException("Oops! Use event dates in yyyy-MM-dd format.");
+        }
+    }
+
+    /**
+     * Parses and validates a within-period command and its two inclusive ISO dates.
+     *
+     * @param command full within-period command
+     * @return within-period task represented by the command
+     * @throws TrackieException if required data is missing or either date is invalid
+     */
+    public static Task parseWithinPeriod(String command) throws TrackieException {
+        int fromIndex = command.indexOf(" /from");
+        int toIndex = command.indexOf(" /to");
+        if (fromIndex < 0 || toIndex < 0 || toIndex < fromIndex) {
+            throw new TrackieException("Oops! Use: within DESCRIPTION /from START_DATE /to END_DATE");
+        }
+        String description = command.substring("within".length(), fromIndex).trim();
+        String fromText = command.substring(fromIndex + " /from".length(), toIndex).trim();
+        String toText = command.substring(toIndex + " /to".length()).trim();
+        if (description.isEmpty()) {
+            throw new TrackieException("Oops! A within-period task needs a description.");
+        }
+        if (fromText.isEmpty()) {
+            throw new TrackieException("Oops! A within-period task needs a start date after /from.");
+        }
+        if (toText.isEmpty()) {
+            throw new TrackieException("Oops! A within-period task needs an end date after /to.");
+        }
+        try {
+            LocalDate from = LocalDate.parse(fromText);
+            LocalDate to = LocalDate.parse(toText);
+            if (to.isBefore(from)) {
+                throw new TrackieException("Oops! The end date cannot be before the start date.");
+            }
+            return new WithinPeriod(description, from, to);
+        } catch (DateTimeParseException exception) {
+            throw new TrackieException("Oops! Use within-period dates in yyyy-MM-dd format.");
         }
     }
 
