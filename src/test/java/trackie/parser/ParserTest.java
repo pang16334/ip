@@ -37,4 +37,21 @@ public class ParserTest {
 
         assertEquals("Oops! Use a deadline date in yyyy-MM-dd format.", exception.getMessage());
     }
+
+    @Test
+    public void parseWithinPeriod_validInclusivePeriod_returnsFormattedTask() throws TrackieException {
+        Task task = Parser.parseWithinPeriod(
+                "within collect certificate /from 2026-09-15 /to 2026-09-25");
+
+        assertEquals("[W][ ] collect certificate (from: Sep 15 2026 to: Sep 25 2026)",
+                task.toString());
+    }
+
+    @Test
+    public void parseWithinPeriod_endBeforeStart_throwsTrackieException() {
+        TrackieException exception = assertThrows(TrackieException.class, () -> Parser.parseWithinPeriod(
+                "within collect certificate /from 2026-09-25 /to 2026-09-15"));
+
+        assertEquals("Oops! The end date cannot be before the start date.", exception.getMessage());
+    }
 }

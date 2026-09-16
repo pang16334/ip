@@ -9,7 +9,9 @@ public enum TaskType {
     /** A task with a due date. */
     DEADLINE("D"),
     /** A task with start and end dates. */
-    EVENT("E");
+    EVENT("E"),
+    /** A task that may be completed within a date range. */
+    WITHIN_PERIOD("W");
 
     private final String icon;
 
