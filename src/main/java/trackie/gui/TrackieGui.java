@@ -24,7 +24,7 @@ public class TrackieGui {
 
     /** @return Trackie's GUI-friendly welcome message */
     public String getWelcomeMessage() {
-        return "Hello! I'm Trackie.\nWhat can I do for you today?";
+        return "Hi! I'm Trackie, your task-tracking fox.\nReady to stay on track?";
     }
 
     /**

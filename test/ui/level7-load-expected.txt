@@ -5,20 +5,20 @@
    | | | | (_| | (__|   <| |  __/
    |_|_|  \__,_|\___|_|\_\_|\___|
 
-Hello! I'm Trackie.
-What can I do for you today?
-Got it. I've added this task:
+Hi! I'm Trackie, your task-tracking fox.
+Ready to stay on track?
+You're on track! I've added this task:
   [T][ ] read book
 Now you have 1 task in the list.
-Got it. I've added this task:
+You're on track! I've added this task:
   [D][ ] return book (by: Sep 15 2026)
 Now you have 2 tasks in the list.
-Got it. I've added this task:
+You're on track! I've added this task:
   [E][ ] meeting (from: Sep 20 2026 to: Sep 21 2026)
 Now you have 3 tasks in the list.
-Nice! I've marked this task as done:
+Nice progress! This task is complete:
   [D][X] return book (by: Sep 15 2026)
-Bye! Consistency is the key. Hope to see you again soon!
+Great tracking today! See you on the next trail!
  _______             _    _
 |__   __|           | |  (_)
    | |_ __ __ _  ___| | ___  ___
@@ -26,10 +26,10 @@ Bye! Consistency is the key. Hope to see you again soon!
    | | | | (_| | (__|   <| |  __/
    |_|_|  \__,_|\___|_|\_\_|\___|
 
-Hello! I'm Trackie.
-What can I do for you today?
-Here are the tasks in your list:
+Hi! I'm Trackie, your task-tracking fox.
+Ready to stay on track?
+Here's your trail of tasks:
 1.[T][ ] read book
 2.[D][X] return book (by: Sep 15 2026)
 3.[E][ ] meeting (from: Sep 20 2026 to: Sep 21 2026)
-Bye! Consistency is the key. Hope to see you again soon!
+Great tracking today! See you on the next trail!

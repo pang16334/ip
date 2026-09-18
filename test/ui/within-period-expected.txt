@@ -5,18 +5,18 @@
    | | | | (_| | (__|   <| |  __/
    |_|_|  \__,_|\___|_|\_\_|\___|
 
-Hello! I'm Trackie.
-What can I do for you today?
+Hi! I'm Trackie, your task-tracking fox.
+Ready to stay on track?
 Oops! Use: within DESCRIPTION /from START_DATE /to END_DATE
 Oops! A within-period task needs a description.
 Oops! Use within-period dates in yyyy-MM-dd format.
 Oops! The end date cannot be before the start date.
-Got it. I've added this task:
+You're on track! I've added this task:
   [W][ ] collect certificate (from: Sep 15 2026 to: Sep 25 2026)
 Now you have 1 task in the list.
-Nice! I've marked this task as done:
+Nice progress! This task is complete:
   [W][X] collect certificate (from: Sep 15 2026 to: Sep 25 2026)
-Bye! Consistency is the key. Hope to see you again soon!
+Great tracking today! See you on the next trail!
  _______             _    _
 |__   __|           | |  (_)
    | |_ __ __ _  ___| | ___  ___
@@ -24,8 +24,8 @@ Bye! Consistency is the key. Hope to see you again soon!
    | | | | (_| | (__|   <| |  __/
    |_|_|  \__,_|\___|_|\_\_|\___|
 
-Hello! I'm Trackie.
-What can I do for you today?
-Here are the tasks in your list:
+Hi! I'm Trackie, your task-tracking fox.
+Ready to stay on track?
+Here's your trail of tasks:
 1.[W][X] collect certificate (from: Sep 15 2026 to: Sep 25 2026)
-Bye! Consistency is the key. Hope to see you again soon!
+Great tracking today! See you on the next trail!

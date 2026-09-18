@@ -38,8 +38,8 @@ public class Ui implements AutoCloseable {
     /** Displays Trackie's greeting. */
     public void showWelcome() {
         this.output.println(BANNER);
-        this.output.println("Hello! I'm Trackie.");
-        this.output.println("What can I do for you today?");
+        this.output.println("Hi! I'm Trackie, your task-tracking fox.");
+        this.output.println("Ready to stay on track?");
     }
 
     /**
@@ -66,7 +66,7 @@ public class Ui implements AutoCloseable {
      * @param tasks tasks to display
      */
     public void showTaskList(TaskList tasks) {
-        this.output.println("Here are the tasks in your list:");
+        this.output.println("Here's your trail of tasks:");
         showNumberedTasks(tasks.asList());
     }
 
@@ -76,7 +76,7 @@ public class Ui implements AutoCloseable {
      * @param tasks matching tasks to display
      */
     public void showMatchingTasks(List<Task> tasks) {
-        this.output.println("Here are the matching tasks in your list:");
+        this.output.println("Here's what I found on the trail:");
         showNumberedTasks(tasks);
     }
 
@@ -86,7 +86,7 @@ public class Ui implements AutoCloseable {
      * @param task task that was marked
      */
     public void showMarked(Task task) {
-        this.output.println("Nice! I've marked this task as done:");
+        this.output.println("Nice progress! This task is complete:");
         this.output.println("  " + task);
     }
 
@@ -96,7 +96,7 @@ public class Ui implements AutoCloseable {
      * @param task task that was unmarked
      */
     public void showUnmarked(Task task) {
-        this.output.println("OK, I've marked this task as not done yet:");
+        this.output.println("No worries! This task is back on your trail:");
         this.output.println("  " + task);
     }
 
@@ -107,7 +107,7 @@ public class Ui implements AutoCloseable {
      * @param taskCount number of remaining tasks
      */
     public void showDeleted(Task task, int taskCount) {
-        this.output.println("Noted. I've removed this task:");
+        this.output.println("Cleared from the trail! I've removed this task:");
         this.output.println("  " + task);
         showTaskCount(taskCount);
     }
@@ -119,7 +119,7 @@ public class Ui implements AutoCloseable {
      * @param taskCount updated number of tasks
      */
     public void showAdded(Task task, int taskCount) {
-        this.output.println("Got it. I've added this task:");
+        this.output.println("You're on track! I've added this task:");
         this.output.println("  " + task);
         showTaskCount(taskCount);
     }
@@ -135,7 +135,7 @@ public class Ui implements AutoCloseable {
 
     /** Displays Trackie's farewell. */
     public void showGoodbye() {
-        this.output.println("Bye! Consistency is the key. Hope to see you again soon!");
+        this.output.println("Great tracking today! See you on the next trail!");
     }
 
     private void showTaskCount(int taskCount) {
