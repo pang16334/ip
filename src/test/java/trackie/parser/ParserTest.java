@@ -39,6 +39,30 @@ public class ParserTest {
     }
 
     @Test
+    public void parseDeadline_duplicateByMarker_throwsTrackieException() {
+        TrackieException exception = assertThrows(TrackieException.class, () -> Parser.parseDeadline(
+                "deadline submit report /by 2026-09-15 /by 2026-09-16"));
+
+        assertEquals("Oops! Use: deadline DESCRIPTION /by TIME", exception.getMessage());
+    }
+
+    @Test
+    public void parseTodo_storageDelimiterInDescription_throwsTrackieException() {
+        TrackieException exception = assertThrows(TrackieException.class, () -> Parser.parseTodo(
+                "todo compare option A | option B"));
+
+        assertEquals("Oops! Task descriptions cannot contain the | character.", exception.getMessage());
+    }
+
+    @Test
+    public void parseEvent_duplicateFromMarker_throwsTrackieException() {
+        TrackieException exception = assertThrows(TrackieException.class, () -> Parser.parseEvent(
+                "event meeting /from 2026-09-15 /from 2026-09-16 /to 2026-09-17"));
+
+        assertEquals("Oops! Use: event DESCRIPTION /from START /to END", exception.getMessage());
+    }
+
+    @Test
     public void parseWithinPeriod_validInclusivePeriod_returnsFormattedTask() throws TrackieException {
         Task task = Parser.parseWithinPeriod(
                 "within collect certificate /from 2026-09-15 /to 2026-09-25");

@@ -80,39 +80,40 @@ public class Trackie {
     }
 
     private boolean execute(String command) throws TrackieException {
-        String commandWord = Parser.getCommandWord(command);
+        String normalizedCommand = command.trim();
+        String commandWord = Parser.getCommandWord(normalizedCommand);
         switch (commandWord) {
             case "bye":
-                requireExactCommand(command, "bye");
+                requireExactCommand(normalizedCommand, "bye");
                 this.ui.showGoodbye();
                 return false;
             case "list":
-                requireExactCommand(command, "list");
+                requireExactCommand(normalizedCommand, "list");
                 this.ui.showTaskList(this.tasks);
                 break;
             case "mark":
-                updateTaskStatus(command, true);
+                updateTaskStatus(normalizedCommand, true);
                 break;
             case "unmark":
-                updateTaskStatus(command, false);
+                updateTaskStatus(normalizedCommand, false);
                 break;
             case "delete":
-                deleteTask(command);
+                deleteTask(normalizedCommand);
                 break;
             case "todo":
-                addTask(Parser.parseTodo(command));
+                addTask(Parser.parseTodo(normalizedCommand));
                 break;
             case "deadline":
-                addTask(Parser.parseDeadline(command));
+                addTask(Parser.parseDeadline(normalizedCommand));
                 break;
             case "event":
-                addTask(Parser.parseEvent(command));
+                addTask(Parser.parseEvent(normalizedCommand));
                 break;
             case "within":
-                addTask(Parser.parseWithinPeriod(command));
+                addTask(Parser.parseWithinPeriod(normalizedCommand));
                 break;
             case "find":
-                this.ui.showMatchingTasks(this.tasks.find(Parser.parseFindKeyword(command)));
+                this.ui.showMatchingTasks(this.tasks.find(Parser.parseFindKeyword(normalizedCommand)));
                 break;
             default:
                 throw unknownCommandException();

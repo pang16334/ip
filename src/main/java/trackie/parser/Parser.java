@@ -12,6 +12,8 @@ import trackie.task.WithinPeriod;
 
 /** Converts user commands into validated task data. */
 public class Parser {
+    private static final char STORAGE_DELIMITER = '|';
+
     private Parser() {
     }
 
@@ -65,9 +67,7 @@ public class Parser {
      */
     public static Task parseTodo(String command) throws TrackieException {
         String description = command.substring("todo".length()).trim();
-        if (description.isEmpty()) {
-            throw new TrackieException("Oops! A todo needs a description.");
-        }
+        validateDescription(description, "A todo needs a description.");
         return new Todo(description);
     }
 
@@ -80,14 +80,12 @@ public class Parser {
      */
     public static Task parseDeadline(String command) throws TrackieException {
         int byIndex = command.indexOf(" /by");
-        if (byIndex < 0) {
+        if (byIndex < 0 || byIndex != command.lastIndexOf(" /by")) {
             throw new TrackieException("Oops! Use: deadline DESCRIPTION /by TIME");
         }
         String description = command.substring("deadline".length(), byIndex).trim();
         String by = command.substring(byIndex + " /by".length()).trim();
-        if (description.isEmpty()) {
-            throw new TrackieException("Oops! A deadline needs a description.");
-        }
+        validateDescription(description, "A deadline needs a description.");
         if (by.isEmpty()) {
             throw new TrackieException("Oops! A deadline needs a due date or time after /by.");
         }
@@ -108,15 +106,15 @@ public class Parser {
     public static Task parseEvent(String command) throws TrackieException {
         int fromIndex = command.indexOf(" /from");
         int toIndex = command.indexOf(" /to");
-        if (fromIndex < 0 || toIndex < 0 || toIndex < fromIndex) {
+        boolean hasDuplicateMarker = fromIndex != command.lastIndexOf(" /from")
+                || toIndex != command.lastIndexOf(" /to");
+        if (fromIndex < 0 || toIndex < 0 || toIndex < fromIndex || hasDuplicateMarker) {
             throw new TrackieException("Oops! Use: event DESCRIPTION /from START /to END");
         }
         String description = command.substring("event".length(), fromIndex).trim();
         String from = command.substring(fromIndex + " /from".length(), toIndex).trim();
         String to = command.substring(toIndex + " /to".length()).trim();
-        if (description.isEmpty()) {
-            throw new TrackieException("Oops! An event needs a description.");
-        }
+        validateDescription(description, "An event needs a description.");
         if (from.isEmpty()) {
             throw new TrackieException("Oops! An event needs a start after /from.");
         }
@@ -140,15 +138,15 @@ public class Parser {
     public static Task parseWithinPeriod(String command) throws TrackieException {
         int fromIndex = command.indexOf(" /from");
         int toIndex = command.indexOf(" /to");
-        if (fromIndex < 0 || toIndex < 0 || toIndex < fromIndex) {
+        boolean hasDuplicateMarker = fromIndex != command.lastIndexOf(" /from")
+                || toIndex != command.lastIndexOf(" /to");
+        if (fromIndex < 0 || toIndex < 0 || toIndex < fromIndex || hasDuplicateMarker) {
             throw new TrackieException("Oops! Use: within DESCRIPTION /from START_DATE /to END_DATE");
         }
         String description = command.substring("within".length(), fromIndex).trim();
         String fromText = command.substring(fromIndex + " /from".length(), toIndex).trim();
         String toText = command.substring(toIndex + " /to".length()).trim();
-        if (description.isEmpty()) {
-            throw new TrackieException("Oops! A within-period task needs a description.");
-        }
+        validateDescription(description, "A within-period task needs a description.");
         if (fromText.isEmpty()) {
             throw new TrackieException("Oops! A within-period task needs a start date after /from.");
         }
@@ -180,5 +178,22 @@ public class Parser {
             throw new TrackieException("Oops! Please specify a keyword after find.");
         }
         return keyword;
+    }
+
+    /**
+     * Ensures a task description exists and cannot corrupt the storage format.
+     *
+     * @param description task description to validate
+     * @param missingDescriptionMessage detail used when the description is blank
+     * @throws TrackieException if the description is blank or contains the storage delimiter
+     */
+    private static void validateDescription(String description, String missingDescriptionMessage)
+            throws TrackieException {
+        if (description.isEmpty()) {
+            throw new TrackieException("Oops! " + missingDescriptionMessage);
+        }
+        if (description.indexOf(STORAGE_DELIMITER) >= 0) {
+            throw new TrackieException("Oops! Task descriptions cannot contain the | character.");
+        }
     }
 }
