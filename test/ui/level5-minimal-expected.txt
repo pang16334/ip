@@ -5,13 +5,13 @@
    | | | | (_| | (__|   <| |  __/
    |_|_|  \__,_|\___|_|\_\_|\___|
 
-Hello! I'm Trackie.
-What can I do for you today?
+Hi! I'm Trackie, your task-tracking fox.
+Ready to stay on track?
 Oops! A todo needs a description.
-Got it. I've added this task:
+You're on track! I've added this task:
   [T][ ] read book
 Now you have 1 task in the list.
 Oops! I don't recognize that command.
-Here are the tasks in your list:
+Here's your trail of tasks:
 1.[T][ ] read book
-Bye! Consistency is the key. Hope to see you again soon!
+Great tracking today! See you on the next trail!

@@ -19,6 +19,7 @@ Each case runs in a fresh Trackie process. Input and expected-output paths are r
 Run `./gradlew run` and verify the following Level 10 behavior:
 
 - The Trackie window opens with Trackie's welcome message.
+- Trackie's welcome and task responses use its encouraging fox-coach personality.
 - Chat bubbles, the command field, and the separate Send button have rounded styling and visible shadows.
 - Pressing Enter or clicking **Send** displays both the command and Trackie's response.
 - Adding, listing, marking, unmarking, deleting, and finding tasks gives the same responses as the text UI.
