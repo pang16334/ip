@@ -23,4 +23,5 @@ Run `./gradlew run` and verify the following Level 10 behavior:
 - Pressing Enter or clicking **Send** displays both the command and Trackie's response.
 - Adding, listing, marking, unmarking, deleting, and finding tasks gives the same responses as the text UI.
 - Invalid commands display a helpful error without closing the window.
+- Error responses use a red-tinted bubble that is visually distinct from normal replies.
 - Entering `bye` displays the farewell before the window closes.

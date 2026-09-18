@@ -16,6 +16,8 @@ import javafx.scene.layout.HBox;
 
 /** Represents one chat message and the avatar of its speaker. */
 public class DialogBox extends HBox {
+    private static final String ERROR_PREFIX = "Oops!";
+
     @FXML
     private Label dialog;
     @FXML
@@ -55,6 +57,9 @@ public class DialogBox extends HBox {
     public static DialogBox getTrackieDialog(String text, Image image) {
         DialogBox dialogBox = new DialogBox(text, image);
         dialogBox.flip();
+        if (text.startsWith(ERROR_PREFIX)) {
+            dialogBox.dialog.getStyleClass().add("error-label");
+        }
         return dialogBox;
     }
 

@@ -12,6 +12,12 @@
     -fx-border-radius: 14px 14px 14px 2px;
 }
 
+.error-label {
+    -fx-background-color: #fff0f0;
+    -fx-border-color: #e57373;
+    -fx-text-fill: #9b2424;
+}
+
 #displayPicture {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.18), 7, 0.3, 1, 2);
 }
