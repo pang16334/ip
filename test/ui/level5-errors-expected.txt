@@ -16,17 +16,24 @@ Oops! Use: event DESCRIPTION /from START /to END
 Oops! Use: event DESCRIPTION /from START /to END
 Oops! An event needs a start after /from.
 Oops! An event needs an end after /to.
+Oops! Task descriptions cannot contain the | character.
+Oops! Use: deadline DESCRIPTION /by TIME
+Oops! Use: event DESCRIPTION /from START /to END
+Got it. I've added this task:
+  [T][ ] spaced task
+Now you have 1 task in the list.
 Got it. I've added this task:
   [T][ ] read book
-Now you have 1 task in the list.
+Now you have 2 tasks in the list.
 Oops! The task number must be a whole number.
-Oops! Choose a task number between 1 and 1.
-Oops! Choose a task number between 1 and 1.
+Oops! Choose a task number between 1 and 2.
+Oops! Choose a task number between 1 and 2.
 Nice! I've marked this task as done:
-  [T][X] read book
+  [T][X] spaced task
 Oops! The task number must be a whole number.
 OK, I've marked this task as not done yet:
-  [T][ ] read book
+  [T][ ] spaced task
 Here are the tasks in your list:
-1.[T][ ] read book
+1.[T][ ] spaced task
+2.[T][ ] read book
 Bye! Consistency is the key. Hope to see you again soon!

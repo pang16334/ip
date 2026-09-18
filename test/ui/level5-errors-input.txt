@@ -7,12 +7,16 @@ event
 event meeting /from Mon
 event meeting /from /to 4pm
 event meeting /from Mon /to
+todo compare option A | option B
+deadline submit report /by 2026-09-15 /by 2026-09-16
+event meeting /from 2026-09-15 /from 2026-09-16 /to 2026-09-17
+   todo spaced task
 todo read book
 mark abc
 mark 0
-mark 2
+mark 3
 mark 1
 unmark xyz
 unmark 1
-list
-bye
+   list
+   bye
