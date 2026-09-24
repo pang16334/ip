@@ -54,6 +54,7 @@ Trackie displays the saved deadline as:
 ## Adding an event
 
 Use `event` for an activity with a start and end date.
+The end date cannot be before the start date.
 
 ```text
 event attend software engineering workshop /from 2026-09-21 /to 2026-09-22
@@ -87,7 +88,8 @@ Here's your trail of tasks:
 
 ## Finding tasks
 
-Use `find` to display tasks whose descriptions contain the given keyword. The search is case-sensitive.
+Use `find` to display tasks whose descriptions contain the given keyword. The search is case-insensitive.
+Trackie tells you explicitly when no tasks match the keyword.
 
 ```text
 find project

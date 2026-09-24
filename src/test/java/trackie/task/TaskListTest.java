@@ -49,9 +49,10 @@ public class TaskListTest {
     }
 
     @Test
-    public void find_differentKeywordCase_returnsNoMatches() {
-        TaskList tasks = new TaskList(List.of(new Todo("read book")));
+    public void find_differentKeywordCase_returnsMatch() {
+        Task readBook = new Todo("read book");
+        TaskList tasks = new TaskList(List.of(readBook));
 
-        assertEquals(List.of(), tasks.find("BOOK"));
+        assertEquals(List.of(readBook), tasks.find("BOOK"));
     }
 }
