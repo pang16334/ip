@@ -8,17 +8,17 @@
 Hi! I'm Trackie, your task-tracking fox.
 Ready to stay on track?
 Oops! There are no tasks to mark.
-Oops! Use: deadline DESCRIPTION /by TIME
-Oops! Use: deadline DESCRIPTION /by TIME
+Oops! Use: deadline DESCRIPTION /by DATE
+Oops! Use: deadline DESCRIPTION /by DATE
 Oops! A deadline needs a description.
-Oops! A deadline needs a due date or time after /by.
-Oops! Use: event DESCRIPTION /from START /to END
-Oops! Use: event DESCRIPTION /from START /to END
-Oops! An event needs a start after /from.
-Oops! An event needs an end after /to.
+Oops! A deadline needs a due date after /by.
+Oops! Use: event DESCRIPTION /from START_DATE /to END_DATE
+Oops! Use: event DESCRIPTION /from START_DATE /to END_DATE
+Oops! An event needs a start date after /from.
+Oops! An event needs an end date after /to.
 Oops! Task descriptions cannot contain the | character.
-Oops! Use: deadline DESCRIPTION /by TIME
-Oops! Use: event DESCRIPTION /from START /to END
+Oops! Use: deadline DESCRIPTION /by DATE
+Oops! Use: event DESCRIPTION /from START_DATE /to END_DATE
 You're on track! I've added this task:
   [T][ ] spaced task
 Now you have 1 task in the list.

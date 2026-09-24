@@ -9,6 +9,9 @@ Hi! I'm Trackie, your task-tracking fox.
 Ready to stay on track?
 Oops! Use a deadline date in yyyy-MM-dd format.
 Oops! Use event dates in yyyy-MM-dd format.
+Oops! Enter a valid deadline date.
+Oops! Enter valid event dates.
+Oops! The end date cannot be before the start date.
 You're on track! I've added this task:
   [D][ ] submit report (by: Sep 15 2026)
 Now you have 1 task in the list.

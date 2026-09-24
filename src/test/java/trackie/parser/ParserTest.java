@@ -43,7 +43,7 @@ public class ParserTest {
         TrackieException exception = assertThrows(TrackieException.class, () -> Parser.parseDeadline(
                 "deadline submit report /by 2026-09-15 /by 2026-09-16"));
 
-        assertEquals("Oops! Use: deadline DESCRIPTION /by TIME", exception.getMessage());
+        assertEquals("Oops! Use: deadline DESCRIPTION /by DATE", exception.getMessage());
     }
 
     @Test
@@ -59,7 +59,32 @@ public class ParserTest {
         TrackieException exception = assertThrows(TrackieException.class, () -> Parser.parseEvent(
                 "event meeting /from 2026-09-15 /from 2026-09-16 /to 2026-09-17"));
 
-        assertEquals("Oops! Use: event DESCRIPTION /from START /to END", exception.getMessage());
+        assertEquals("Oops! Use: event DESCRIPTION /from START_DATE /to END_DATE",
+                exception.getMessage());
+    }
+
+    @Test
+    public void parseDeadline_nonexistentDate_throwsSpecificTrackieException() {
+        TrackieException exception = assertThrows(TrackieException.class, () -> Parser.parseDeadline(
+                "deadline submit report /by 2026-02-30"));
+
+        assertEquals("Oops! Enter a valid deadline date.", exception.getMessage());
+    }
+
+    @Test
+    public void parseEvent_nonexistentDate_throwsSpecificTrackieException() {
+        TrackieException exception = assertThrows(TrackieException.class, () -> Parser.parseEvent(
+                "event meeting /from 2026-02-30 /to 2026-03-01"));
+
+        assertEquals("Oops! Enter valid event dates.", exception.getMessage());
+    }
+
+    @Test
+    public void parseEvent_endBeforeStart_throwsTrackieException() {
+        TrackieException exception = assertThrows(TrackieException.class, () -> Parser.parseEvent(
+                "event meeting /from 2026-09-25 /to 2026-09-15"));
+
+        assertEquals("Oops! The end date cannot be before the start date.", exception.getMessage());
     }
 
     @Test

@@ -77,6 +77,10 @@ public class Ui implements AutoCloseable {
      */
     public void showMatchingTasks(List<Task> tasks) {
         this.output.println("Here's what I found on the trail:");
+        if (tasks.isEmpty()) {
+            this.output.println("No matching tasks found.");
+            return;
+        }
         showNumberedTasks(tasks);
     }
 

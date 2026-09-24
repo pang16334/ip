@@ -1,5 +1,7 @@
 package trackie.task;
 
+import java.util.Locale;
+
 /**
  * Represents a task with a description and completion status.
  */
@@ -54,13 +56,15 @@ public abstract class Task {
     }
 
     /**
-     * Checks whether this task's description contains a keyword.
+     * Checks whether this task's description contains a keyword, ignoring case.
      *
      * @param keyword text to search for
      * @return true if the description contains the keyword
      */
     public boolean containsKeyword(String keyword) {
-        return this.description.contains(keyword);
+        String normalizedDescription = this.description.toLowerCase(Locale.ROOT);
+        String normalizedKeyword = keyword.toLowerCase(Locale.ROOT);
+        return normalizedDescription.contains(normalizedKeyword);
     }
 
     /**

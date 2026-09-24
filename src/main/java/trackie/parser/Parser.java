@@ -81,19 +81,18 @@ public class Parser {
     public static Task parseDeadline(String command) throws TrackieException {
         int byIndex = command.indexOf(" /by");
         if (byIndex < 0 || byIndex != command.lastIndexOf(" /by")) {
-            throw new TrackieException("Oops! Use: deadline DESCRIPTION /by TIME");
+            throw new TrackieException("Oops! Use: deadline DESCRIPTION /by DATE");
         }
         String description = command.substring("deadline".length(), byIndex).trim();
         String by = command.substring(byIndex + " /by".length()).trim();
         validateDescription(description, "A deadline needs a description.");
         if (by.isEmpty()) {
-            throw new TrackieException("Oops! A deadline needs a due date or time after /by.");
+            throw new TrackieException("Oops! A deadline needs a due date after /by.");
         }
-        try {
-            return new Deadline(description, LocalDate.parse(by));
-        } catch (DateTimeParseException exception) {
-            throw new TrackieException("Oops! Use a deadline date in yyyy-MM-dd format.");
-        }
+        LocalDate deadlineDate = parseIsoDate(by,
+                "Oops! Use a deadline date in yyyy-MM-dd format.",
+                "Oops! Enter a valid deadline date.");
+        return new Deadline(description, deadlineDate);
     }
 
     /**
@@ -109,23 +108,29 @@ public class Parser {
         boolean hasDuplicateMarker = fromIndex != command.lastIndexOf(" /from")
                 || toIndex != command.lastIndexOf(" /to");
         if (fromIndex < 0 || toIndex < 0 || toIndex < fromIndex || hasDuplicateMarker) {
-            throw new TrackieException("Oops! Use: event DESCRIPTION /from START /to END");
+            throw new TrackieException(
+                    "Oops! Use: event DESCRIPTION /from START_DATE /to END_DATE");
         }
         String description = command.substring("event".length(), fromIndex).trim();
         String from = command.substring(fromIndex + " /from".length(), toIndex).trim();
         String to = command.substring(toIndex + " /to".length()).trim();
         validateDescription(description, "An event needs a description.");
         if (from.isEmpty()) {
-            throw new TrackieException("Oops! An event needs a start after /from.");
+            throw new TrackieException("Oops! An event needs a start date after /from.");
         }
         if (to.isEmpty()) {
-            throw new TrackieException("Oops! An event needs an end after /to.");
+            throw new TrackieException("Oops! An event needs an end date after /to.");
         }
-        try {
-            return new Event(description, LocalDate.parse(from), LocalDate.parse(to));
-        } catch (DateTimeParseException exception) {
-            throw new TrackieException("Oops! Use event dates in yyyy-MM-dd format.");
+        LocalDate startDate = parseIsoDate(from,
+                "Oops! Use event dates in yyyy-MM-dd format.",
+                "Oops! Enter valid event dates.");
+        LocalDate endDate = parseIsoDate(to,
+                "Oops! Use event dates in yyyy-MM-dd format.",
+                "Oops! Enter valid event dates.");
+        if (endDate.isBefore(startDate)) {
+            throw new TrackieException("Oops! The end date cannot be before the start date.");
         }
+        return new Event(description, startDate, endDate);
     }
 
     /**
@@ -153,16 +158,16 @@ public class Parser {
         if (toText.isEmpty()) {
             throw new TrackieException("Oops! A within-period task needs an end date after /to.");
         }
-        try {
-            LocalDate from = LocalDate.parse(fromText);
-            LocalDate to = LocalDate.parse(toText);
-            if (to.isBefore(from)) {
-                throw new TrackieException("Oops! The end date cannot be before the start date.");
-            }
-            return new WithinPeriod(description, from, to);
-        } catch (DateTimeParseException exception) {
-            throw new TrackieException("Oops! Use within-period dates in yyyy-MM-dd format.");
+        LocalDate from = parseIsoDate(fromText,
+                "Oops! Use within-period dates in yyyy-MM-dd format.",
+                "Oops! Enter valid within-period dates.");
+        LocalDate to = parseIsoDate(toText,
+                "Oops! Use within-period dates in yyyy-MM-dd format.",
+                "Oops! Enter valid within-period dates.");
+        if (to.isBefore(from)) {
+            throw new TrackieException("Oops! The end date cannot be before the start date.");
         }
+        return new WithinPeriod(description, from, to);
     }
 
     /**
@@ -194,6 +199,26 @@ public class Parser {
         }
         if (description.indexOf(STORAGE_DELIMITER) >= 0) {
             throw new TrackieException("Oops! Task descriptions cannot contain the | character.");
+        }
+    }
+
+    /**
+     * Parses a date while distinguishing a malformed format from an impossible calendar date.
+     *
+     * @param dateText date supplied by the user
+     * @param formatMessage message used when the text is not in ISO format
+     * @param invalidDateMessage message used when an ISO-shaped date does not exist
+     * @return parsed date
+     * @throws TrackieException if the date cannot be parsed
+     */
+    private static LocalDate parseIsoDate(String dateText, String formatMessage,
+            String invalidDateMessage) throws TrackieException {
+        try {
+            return LocalDate.parse(dateText);
+        } catch (DateTimeParseException exception) {
+            boolean hasIsoDateShape = dateText.matches("\\d{4}-\\d{2}-\\d{2}");
+            String message = hasIsoDateShape ? invalidDateMessage : formatMessage;
+            throw new TrackieException(message);
         }
     }
 }
